@@ -5,6 +5,7 @@ server:
     encoding:
       charset: UTF-8
       enabled: true
+      force: true
 service:
   ipAddr: http://localhost
   setting: Mod_login
@@ -21,12 +22,7 @@ spring:
     nacos:
       discovery:
         enabled: false
-  # 设置字符编码为UTF-8
-  http:
-    encoding:
-      charset: UTF-8
-      enabled: true
-      force: true
+
   # Jackson JSON配置
   jackson:
     default-property-inclusion: non_null
