@@ -125,7 +125,8 @@ import { ref, onMounted, reactive, nextTick } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import { pageMusic, getMySongs, deleteSong, updateMusic } from '@/api/singer'; // 修改为从singer.js导入
 import { uploadMusic, uploadImage } from '@/api/upload';
-import MusicPlayer from '@/views/component/musicPlayer.vue';
+import { defineAsyncComponent } from 'vue';
+const MusicPlayer = defineAsyncComponent(() => import('@/views/component/musicPlayer.vue'));
 
 export default {
   name: 'SingerMusicManagement',

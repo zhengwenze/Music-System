@@ -49,7 +49,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { getMyLike, removeLike } from '@/api/mylike.js';
-import MusicPlayer from '@/views/component/musicPlayer.vue';
+import { defineAsyncComponent } from 'vue';
+const MusicPlayer = defineAsyncComponent(() => import('@/views/component/musicPlayer.vue'));
 import { ElMessage } from 'element-plus';
 
 // 状态管理

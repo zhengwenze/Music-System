@@ -1,0 +1,1 @@
+import{_ as s}from"./index.cfbf38c0.js";import{o as e,y as a,D as o,G as t}from"./vendor.1112e821.js";import"./axios.468b7dd2.js";import"./element-plus.c63ee1ff.js";const r={class:"container"};var d=s({__name:"Index",setup:s=>(e((()=>{})),(s,e)=>(a(),o("div",r,[...e[0]||(e[0]=[t("p",null,"该页面正在开发中...",-1)])])))},[["__scopeId","data-v-621722b1"]]);export{d as default};

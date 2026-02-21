@@ -157,5 +157,20 @@
     <build>
         <!-- 注意：父项目不应该配置spring-boot-maven-plugin -->
         <!-- 这个插件应该在子模块中配置 -->
+        <pluginManagement>
+            <plugins>
+                <!-- 指定 maven-compiler-plugin 版本，与 Maven 3.6.1 兼容 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                    <configuration>
+                        <source>${maven.compiler.source}</source>
+                        <target>${maven.compiler.target}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>

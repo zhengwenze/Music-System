@@ -227,7 +227,8 @@ import { ref, onMounted, watch } from 'vue';
 import { ElMessage, ElTabs, ElTabPane } from 'element-plus';
 import { getMyLike, addLike, removeLike } from '@/api/mylike';
 import { getMusicRecommendList, getMusicPage, getRecommendSingers } from '@/api/music';
-import MusicPlayer from '@/views/component/musicPlayer.vue';
+import { defineAsyncComponent } from 'vue';
+const MusicPlayer = defineAsyncComponent(() => import('@/views/component/musicPlayer.vue'));
 
 // 响应式数据
 const hotRankList = ref([]);

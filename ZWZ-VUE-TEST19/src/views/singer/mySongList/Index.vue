@@ -354,7 +354,8 @@ import { uploadImage } from '@/api/upload';
 // 导入音乐收藏相关 API
 import { getMyLike, addLike, removeLike, getLikeList, addLikeList, removeLikeList, getSongListDetailWithLikeStatus } from '@/api/mylike.js';
 // 导入音乐播放器组件
-import MusicPlayer from '@/views/component/musicPlayer.vue';
+import { defineAsyncComponent } from 'vue';
+const MusicPlayer = defineAsyncComponent(() => import('@/views/component/musicPlayer.vue'));
 
 // 响应式数据
 const activeTab = ref('mySongList');
