@@ -47,6 +47,8 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
+    // 配置处理 history 模式的刷新问题
+    historyApiFallback: true,
     // 更新代理配置以匹配相对路径
     proxy: {
       // 将 /admin 代理到 http://localhost:8081
