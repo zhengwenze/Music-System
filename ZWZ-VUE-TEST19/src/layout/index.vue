@@ -1,8 +1,6 @@
 <template>
   <div class="app-wrapper">
     <!-- 侧边栏 -->
-    <!-- 侧边栏 -->
-    <!-- 侧边栏 -->
     <div class="sidebar-container" :class="{ 'is-collapse': isCollapse }">
       <div class="logo-container">
         <img src="\public\music.png" alt="音乐图标" class="logo-icon">
@@ -52,8 +50,6 @@
             <template #title>个人信息</template>
           </el-menu-item>
         </template>
-        <!-- 用户菜单user -->
-        <!-- 用户菜单user -->
         <!-- 用户菜单user -->
         <template v-if="userRole === 2">
           <el-menu-item index="/user/hotMusic" class="student-menu-item">
@@ -632,7 +628,8 @@ const handleLogout = () => {
   position: relative;
 }
 
-.sidebar-container, .main-container {
+.sidebar-container,
+.main-container {
   position: relative;
 }
 
@@ -669,11 +666,11 @@ const handleLogout = () => {
   .sidebar-container {
     width: 200px;
   }
-  
+
   .sidebar-container.is-collapse {
     width: 64px;
   }
-  
+
   .navbar {
     padding: 0 20px;
   }
@@ -687,28 +684,28 @@ const handleLogout = () => {
     z-index: 1000;
     transform: translateX(-100%);
   }
-  
+
   .sidebar-container.is-collapse {
     transform: translateX(0);
     width: 240px;
   }
-  
+
   .main-container {
     margin-left: 0;
   }
-  
+
   .navbar {
     padding: 0 15px;
   }
-  
+
   .username {
     display: none;
   }
-  
+
   .avatar-container {
     padding: 8px;
   }
-  
+
   .app-main {
     padding: 15px;
   }
@@ -719,34 +716,35 @@ const handleLogout = () => {
     height: 60px;
     padding: 0 15px;
   }
-  
+
   .logo-icon {
     width: 30px;
     height: 30px;
   }
-  
+
   .title {
     font-size: 16px;
   }
-  
+
   ::v-deep(.sidebar-menu .el-menu-item) {
     height: 44px;
     line-height: 44px;
     margin: 3px 10px;
     font-size: 13px;
   }
-  
+
   .navbar {
     height: 60px;
   }
-  
+
   .user-avatar {
     width: 36px;
     height: 36px;
   }
-  
+
   /* 移动端调整顶部红色区域 */
-  .logo-container, .navbar {
+  .logo-container,
+  .navbar {
     background: linear-gradient(135deg, #ec4141 0%, #c62f2f 100%);
   }
 }

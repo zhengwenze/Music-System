@@ -207,56 +207,59 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  // 设置页面标题
   document.title = to.meta.title
     ? `${to.meta.title} - 悦享音乐`
     : "悦享音乐";
 
-  // 不需要登录的页面
   const publicPages = ["/login", "/register"];
   const authRequired = !publicPages.includes(to.path);
 
-  // 获取用户信息 - 修改：使用userId替代token
   const userId = getUserId();
   const userRole = getUserRole();
 
   console.log(`路由切换: ${from.path} -> ${to.path}, userId: ${userId ? '存在' : '不存在'}, 角色: ${userRole || '未知'}`);
 
-  // 修改：使用userId验证登录状态
   if (authRequired && !userId) {
     ElMessage.warning("请先登录");
     return next("/login");
   }
 
-  // 检查路由权限 - 修改：角色映射逻辑
-  if (authRequired && to.meta.role) {
-    // 角色映射：数字编码到角色名称
-    const roleMap = {
-      0: "admin",
-      1: "singer",
-      2: "user"
-    };
+  const roleMap = {
+    0: "admin",
+    1: "singer",
+    2: "user"
+  };
+  const userRoleName = roleMap[userRole] || userRole;
 
-    const userRoleName = roleMap[userRole] || userRole;
-
-    if (to.meta.role !== userRoleName) {
-      // 如果用户没有访问该路由的权限，根据角色重定向到对应的首页
-      if (userRole === 0) {
-        return next("/admin/profile");
-      } else if (userRole === 1) {
-        return next("/singer/profile");
-      } else if (userRole === 2) {
-        return next("/user/profile");
-      } else {
-        // 角色不明确，退出登录
-        clearUserInfo();
-        ElMessage.error("权限不足，请重新登录");
-        return next("/login");
-      }
+  const pathRoleMap = {
+    "/admin": "admin",
+    "/user": "user",
+    "/singer": "singer"
+  };
+  
+  let requiredRole = null;
+  for (const [prefix, role] of Object.entries(pathRoleMap)) {
+    if (to.path.startsWith(prefix + "/") || to.path === prefix) {
+      requiredRole = role;
+      break;
     }
   }
 
-  // 修改：使用userId判断登录状态
+  if (authRequired && requiredRole && requiredRole !== userRoleName) {
+    console.log(`权限不足: 需要 ${requiredRole}, 当前 ${userRoleName}`);
+    if (userRole === 0) {
+      return next("/admin/profile");
+    } else if (userRole === 1) {
+      return next("/singer/profile");
+    } else if (userRole === 2) {
+      return next("/user/profile");
+    } else {
+      clearUserInfo();
+      ElMessage.error("权限不足，请重新登录");
+      return next("/login");
+    }
+  }
+
   if (userId && (to.path === "/login" || to.path === "/register")) {
     if (userRole === 0) {
       return next("/admin/profile");
@@ -267,7 +270,6 @@ router.beforeEach((to, from, next) => {
     }
   }
 
-  // 修改：使用userId判断登录状态
   if (userId && to.path === "/") {
     if (userRole === 0) {
       return next("/admin/profile");
