@@ -13,67 +13,83 @@ spring:
     gateway:
       routes:
         # 管理模块路由
-        - id: mod_admin           # 路由ID：管理模块
-          uri: http://localhost:8081  # 转发目标地址
-          predicates: # 路由断言配置
-            - Path=/admin/**      # 路径匹配规则：匹配 /admin 开头的所有请求
+        - id: mod_admin
+          uri: http://localhost:8081
+          predicates:
+            - Path=/admin/**
           filters:
-            - PreserveHostHeader  # 保留原始主机头
+            - PreserveHostHeader
             - AddResponseHeader=X-Debug-Info, Gateway-Route-Working
+        
         - id: mod_like
           uri: http://localhost:8082
           predicates:
             - Path=/like/**
           filters:
-            - PreserveHostHeader  # 保留原始主机头
+            - PreserveHostHeader
             - AddResponseHeader=X-Debug-Info, Gateway-Route-Working
+        
+        # 登录模块路由 - 匹配 /login/ 开头的子路径（排除精确的 /login 页面路由）
         - id: mod_login
           uri: http://localhost:8083
           predicates:
-            - Path=/login/**
+            - Path=/login/*,/login/**,/register/**
           filters:
-            - PreserveHostHeader  # 保留原始主机头
+            - PreserveHostHeader
             - AddResponseHeader=X-Debug-Info, Gateway-Route-Working
+        
         - id: mod_msg
           uri: http://localhost:8084
           predicates:
             - Path=/msg/**
           filters:
-            - PreserveHostHeader  # 保留原始主机头
+            - PreserveHostHeader
             - AddResponseHeader=X-Debug-Info, Gateway-Route-Working
+        
         - id: mod_music
           uri: http://localhost:8085
           predicates:
             - Path=/music/**
           filters:
-            - PreserveHostHeader  # 保留原始主机头
+            - PreserveHostHeader
             - AddResponseHeader=X-Debug-Info, Gateway-Route-Working
+        
         - id: mod_setting
           uri: http://localhost:8086
           predicates:
             - Path=/setting/**
           filters:
-            - PreserveHostHeader  # 保留原始主机头
+            - PreserveHostHeader
             - AddResponseHeader=X-Debug-Info, Gateway-Route-Working
+        
+        # 歌手模块路由 - 匹配 /singer/ 开头的子路径（排除精确的 /singer 页面路由）
         - id: mod_singer
           uri: http://localhost:8087
           predicates:
-            - Path=/singer/**
+            - Path=/singer/*,/singer/**
+          filters:
+            - PreserveHostHeader
+        
         - id: mod_songList
           uri: http://localhost:8088
           predicates:
             - Path=/songList/**
+          filters:
+            - PreserveHostHeader
+        
         - id: mod_upload
           uri: http://localhost:8089
           predicates:
             - Path=/upload/**
-        # 前端静态资源路由，处理前端 history 模式的刷新问题
+          filters:
+            - PreserveHostHeader
+        
+        # 前端静态资源路由 - 匹配所有请求
         - id: frontend
-          uri: http://localhost:3000
+          uri: http://localhost:5173
           predicates:
             - Path=/**
           filters:
-            # 排除后端 API 路径
             - RewritePath=/(?<segment>.*), /${segment}
             - PreserveHostHeader
 

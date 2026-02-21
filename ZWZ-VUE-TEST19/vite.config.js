@@ -45,16 +45,55 @@ export default defineConfig({
     }
   },
   server: {
-    port: 3000,
+    host: '0.0.0.0',
+    port: 5173,
+    strictPort: true,
     open: false,
-    // 代理配置，只代理 /api 请求
     proxy: {
-      // 将 /api/* 代理到网关
-      '^/api/': {
-        target: 'http://localhost:8080',
+      '/api/admin': {
+        target: 'http://localhost:8081',
         changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/api/, '') // 移除 /api 前缀
+        rewrite: (path) => path.replace(/^\/api/, '')
+      },
+      '/api/like': {
+        target: 'http://localhost:8082',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      },
+      '/api/login': {
+        target: 'http://localhost:8083',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      },
+      '/api/msg': {
+        target: 'http://localhost:8084',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      },
+      '/api/music': {
+        target: 'http://localhost:8085',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      },
+      '/api/setting': {
+        target: 'http://localhost:8086',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      },
+      '/api/singer': {
+        target: 'http://localhost:8087',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      },
+      '/api/songList': {
+        target: 'http://localhost:8088',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      },
+      '/api/upload': {
+        target: 'http://localhost:8089',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
   }
