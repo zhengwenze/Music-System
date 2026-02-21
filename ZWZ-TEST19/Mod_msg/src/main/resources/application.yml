@@ -9,7 +9,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/music_dreamer?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=UTC
     username: root
-    password: zwz050418
+    password: root
   application:
     name: Mod_msg
   servlet:
