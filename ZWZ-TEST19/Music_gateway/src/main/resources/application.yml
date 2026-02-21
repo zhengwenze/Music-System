@@ -67,6 +67,15 @@ spring:
           uri: http://localhost:8089
           predicates:
             - Path=/upload/**
+        # 前端静态资源路由，处理前端 history 模式的刷新问题
+        - id: frontend
+          uri: http://localhost:3000
+          predicates:
+            - Path=/**
+          filters:
+            # 排除后端 API 路径
+            - RewritePath=/(?<segment>.*), /${segment}
+            - PreserveHostHeader
 
       # 全局CORS配置
       globalcors:
