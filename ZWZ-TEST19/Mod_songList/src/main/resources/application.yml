@@ -1,0 +1,49 @@
+server:
+  # 歌单模块端口号8088不可修改！
+  # 歌单模块端口号8088不可修改！
+  # 歌单模块端口号8088不可修改！
+  port: 8088
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+# 服务名配置
+service:
+  setting: Mod_songList
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/music_dreamer?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: zwz050418
+  application:
+    # 歌单模块服务名就要Mod_songList不要改！
+    # 歌单模块服务名就要Mod_songList不要改！
+    name: Mod_songList
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    compatibility-verifier:
+      enabled: false
+  #连接redis数据库6379端口不要改！
+  data:
+    redis:
+      port: 6379
+      host: localhost
+
+# MyBatis Plus配置
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true  # 启用驼峰命名转换
+    default-statement-timeout: 30
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

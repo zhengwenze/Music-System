@@ -1,0 +1,51 @@
+server:
+  #  端口号8083不要改！
+  port: 8083
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+service:
+  ipAddr: http://localhost
+  setting: Mod_login
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/music_dreamer?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf8
+    username: root
+    password: zwz050418
+  application:
+    name: Mod_login
+  # 禁用Nacos服务发现，使服务能独立运行
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+  # 设置字符编码为UTF-8
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  # Jackson JSON配置
+  jackson:
+    default-property-inclusion: non_null
+    date-format: yyyy-MM-dd
+    time-zone: Asia/Shanghai
+    serialization:
+      write-dates-as-timestamps: false
+    charset: UTF-8
+
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml
+  type-aliases-package: org.zwz.mod_login.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

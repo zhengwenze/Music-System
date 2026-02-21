@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zwz.mod_songlist.mapper.LikelistMapper">
+
+    <!-- 根据用户ID查询收藏的歌单 -->
+    <select id="selectByUserId" parameterType="java.lang.Integer" resultType="org.zwz.mod_songlist.entity.Likelist">
+        SELECT * FROM likelist WHERE user_id = #{userId} ORDER BY create_time DESC
+    </select>
+
+    <!-- 根据用户ID和歌单ID查询收藏记录 -->
+    <select id="selectByUserIdAndListId" resultType="org.zwz.mod_songlist.entity.Likelist">
+        SELECT * FROM likelist WHERE user_id = #{userId} AND list_id = #{listId}
+    </select>
+
+    <!-- 根据用户ID和歌单ID删除收藏 -->
+    <delete id="deleteByUserIdAndListId">
+        DELETE FROM likelist WHERE user_id = #{userId} AND list_id = #{listId}
+    </delete>
+
+    <!-- 统计用户收藏的歌单数量 -->
+    <select id="countByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM likelist WHERE user_id = #{userId}
+    </select>
+
+    <!-- 根据歌单ID查询收藏该歌单的用户 -->
+    <select id="selectByListId" parameterType="java.lang.Integer" resultType="org.zwz.mod_songlist.entity.Likelist">
+        SELECT * FROM likelist WHERE list_id = #{listId} ORDER BY create_time DESC
+    </select>
+
+    <!-- 统计歌单的收藏数量 -->
+    <select id="countByListId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM likelist WHERE list_id = #{listId}
+    </select>
+
+</mapper>

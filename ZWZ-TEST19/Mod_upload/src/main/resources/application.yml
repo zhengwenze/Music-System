@@ -1,0 +1,33 @@
+server:
+  # 文件上传下载模块端口号8089不可修改！
+  port: 8089
+
+service:
+  ipAddr: http://localhost
+  download:
+    address: D://file/
+
+spring:
+  application:
+    name: Mod_upload
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  mvc:
+    static-path-pattern: /file/**
+  web:
+    resources:
+      static-locations: classpath:/static/,file:${service.download.address}
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+    compatibility-verifier:
+      enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

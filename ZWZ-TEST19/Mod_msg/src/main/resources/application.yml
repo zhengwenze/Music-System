@@ -1,0 +1,38 @@
+server:
+  #  端口号就要8084不要改！
+  #  端口号就要8084不要改！
+  #  端口号就要8084不要改！
+  port: 8084
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/music_dreamer?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: zwz050418
+  application:
+    name: Mod_msg
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+
+# MyBatis Plus配置
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+# 消息模块配置
+message:
+  max-content-length: 1000

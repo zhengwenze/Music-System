@@ -1,0 +1,37 @@
+server:
+  #  端口号就要8085不要改！
+  port: 8085
+
+# 服务名配置
+service:
+  setting: Mod_music
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/music_dreamer?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: zwz050418
+  application:
+    #  服务名就要Mod_music不要改！
+    name: Mod_music
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  #连接redis数据库6379端口不要改！
+  data:
+    redis:
+      port: 6379
+      host: localhost
+
+# MyBatis Plus配置
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true  # 启用驼峰命名转换
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

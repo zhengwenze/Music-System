@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zwz.mod_songlist.mapper.ListMusicMapper">
+
+    <!-- 根据歌单ID删除所有关联的歌曲 -->
+    <delete id="deleteByListId" parameterType="java.lang.Integer">
+        DELETE FROM list_music WHERE listid = #{listId}
+    </delete>
+
+    <!-- 根据歌单ID和歌曲ID删除关联 -->
+    <delete id="deleteByListIdAndMusicId">
+        DELETE FROM list_music WHERE listid = #{listId} AND music = #{musicId}
+    </delete>
+
+    <!-- 批量添加歌曲到歌单 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO list_music (music, listid, add_time)
+        VALUES
+        <foreach collection="listMusics" item="item" separator=",">
+            (#{item.music}, #{item.listid}, #{item.addTime})
+        </foreach>
+    </insert>
+
+    <!-- 统计歌单中的歌曲数量 -->
+    <select id="countByListId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM list_music WHERE listid = #{listId}
+    </select>
+
+</mapper>
