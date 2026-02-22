@@ -20,9 +20,11 @@
 
     <div class="message-container">
       <el-empty v-if="loading" description="加载中...">
-        <el-icon size="40" color="#409eff">
-          <loading />
-        </el-icon>
+        <template #image>
+          <el-icon :size="40" color="#409eff">
+            <Loading />
+          </el-icon>
+        </template>
       </el-empty>
       <el-empty v-else-if="messages.length === 0" description="暂无消息">
         <el-button type="primary" @click="fetchMessages">刷新</el-button>
