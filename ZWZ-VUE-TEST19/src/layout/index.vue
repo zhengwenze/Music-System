@@ -7,7 +7,7 @@
         <span class="title">悦享音乐</span>
       </div>
       <el-menu :default-active="activeMenu" class="sidebar-menu" :collapse="isCollapse" background-color="#304156"
-        text-color="#bfcbd9" active-text-color="#ffb600" unique-opened router>
+        text-color="#bfcbd9" active-text-color="#ffb600" unique-opened @select="handleMenuSelect">
         <!-- 管理员菜单admin -->
         <template v-if="userRole === 0">
           <el-menu-item index="/admin/userManage">
@@ -159,15 +159,19 @@ const router = useRouter();
 // 侧边栏折叠状态
 const isCollapse = ref(false);
 
-// 当前用户信息
-const userRole = ref(0); // 默认管理员
 const username = ref(getUsername() || '管理员');
 const name = ref(getName() || '');
-const userAvatar = ref(getAvatar() || ''); // 用户头像，使用getAvatar函数获取
+const userAvatar = ref(getAvatar() || '');
+const roleUpdateTrigger = ref(0);
 
-// 计算用户角色中文名
+const userRole = computed(() => {
+  roleUpdateTrigger.value;
+  return getUserRole();
+});
+
 const roleName = computed(() => {
-  switch (userRole.value) {
+  const role = userRole.value;
+  switch (role) {
     case 0: return '管理员';
     case 1: return '歌手';
     case 2: return '用户';
@@ -185,39 +189,31 @@ const updateUsername = () => {
 };
 
 onMounted(() => {
-  // 确保获取到的角色值是数字类型
-  const roleValue = getUserRole();
-  userRole.value = typeof roleValue === 'string' ? parseInt(roleValue, 10) : roleValue || 0;
   console.log('当前用户角色:', userRole.value);
   console.log('初始用户名:', username.value);
 
-  // 更新头像（使用getAvatar函数）
   userAvatar.value = getAvatar() || '';
 
-  // 监听localStorage变化（跨标签页）
   window.addEventListener('storage', (event) => {
     console.log('检测到storage变化:', event.key, event.newValue);
-    if (event.key === 'username' || event.key === null) { // null表示storage被清空
+    if (event.key === 'username' || event.key === null) {
       updateUsername();
     }
-    // 监听头像变化
     if (event.key === 'avatar') {
       userAvatar.value = event.newValue || '';
     }
   });
 });
 
-// 在watchEffect中也更新头像
 watchEffect(() => {
-  // 更频繁地检查localStorage中的用户名，缩短检查间隔
   const unwatch = setInterval(() => {
     updateUsername();
-    // 同时检查头像更新
     const currentAvatar = getAvatar() || '';
     if (currentAvatar !== userAvatar.value) {
       userAvatar.value = currentAvatar;
     }
-  }, 500); // 改为500ms检查一次
+    roleUpdateTrigger.value++;
+  }, 500);
 
   return () => clearInterval(unwatch);
 });
@@ -230,6 +226,16 @@ const activeMenu = computed(() => {
 // 切换侧边栏折叠状态
 const toggleCollapse = () => {
   isCollapse.value = !isCollapse.value;
+};
+
+// 处理菜单选择
+const handleMenuSelect = (index) => {
+  console.log('菜单选择:', index, '当前路径:', route.path);
+  if (index && index !== route.path) {
+    router.push(index).catch(err => {
+      console.error('路由跳转失败:', err);
+    });
+  }
 };
 
 // 退出登录

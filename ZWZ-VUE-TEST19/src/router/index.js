@@ -217,11 +217,12 @@ router.beforeEach((to, from, next) => {
   const userId = getUserId();
   const userRole = getUserRole();
 
-  console.log(`路由切换: ${from.path} -> ${to.path}, userId: ${userId ? '存在' : '不存在'}, 角色: ${userRole || '未知'}`);
+  console.log(`路由切换: ${from.path} -> ${to.path}, userId: ${userId ? '存在' : '不存在'}, 角色: ${userRole}`);
 
   if (authRequired && !userId) {
     ElMessage.warning("请先登录");
-    return next("/login");
+    next("/login");
+    return;
   }
 
   const roleMap = {
@@ -229,7 +230,7 @@ router.beforeEach((to, from, next) => {
     1: "singer",
     2: "user"
   };
-  const userRoleName = roleMap[userRole] || userRole;
+  const userRoleName = roleMap[userRole];
 
   const pathRoleMap = {
     "/admin": "admin",
@@ -248,36 +249,43 @@ router.beforeEach((to, from, next) => {
   if (authRequired && requiredRole && requiredRole !== userRoleName) {
     console.log(`权限不足: 需要 ${requiredRole}, 当前 ${userRoleName}`);
     if (userRole === 0) {
-      return next("/admin/profile");
+      next("/admin/profile");
     } else if (userRole === 1) {
-      return next("/singer/profile");
+      next("/singer/profile");
     } else if (userRole === 2) {
-      return next("/user/profile");
+      next("/user/profile");
     } else {
       clearUserInfo();
       ElMessage.error("权限不足，请重新登录");
-      return next("/login");
+      next("/login");
     }
+    return;
   }
 
   if (userId && (to.path === "/login" || to.path === "/register")) {
     if (userRole === 0) {
-      return next("/admin/profile");
+      next("/admin/profile");
     } else if (userRole === 1) {
-      return next("/singer/profile");
+      next("/singer/profile");
     } else if (userRole === 2) {
-      return next("/user/profile");
+      next("/user/profile");
+    } else {
+      next();
     }
+    return;
   }
 
   if (userId && to.path === "/") {
     if (userRole === 0) {
-      return next("/admin/profile");
+      next("/admin/profile");
     } else if (userRole === 1) {
-      return next("/singer/profile");
+      next("/singer/profile");
     } else if (userRole === 2) {
-      return next("/user/profile");
+      next("/user/profile");
+    } else {
+      next();
     }
+    return;
   }
 
   next();
