@@ -92,19 +92,32 @@ const handleLogin = async () => {
         password: loginForm.password
       });
 
-      console.log('登录响应数据:', response);
+      console.log('=== 登录响应完整数据 ===');
+      console.log('完整响应:', JSON.stringify(response, null, 2));
+      console.log('response.data:', response.data);
+      console.log('response.data.data:', response.data?.data);
+      console.log('response.data.data.user:', response.data?.data?.user);
 
-      // 获取响应数据（注意：响应拦截器返回的是完整的response对象）
       const result = response.data || response;
 
-      console.log('处理后的登录结果:', result);
+      console.log('=== 处理后的登录结果 ===');
+      console.log('result:', result);
+      console.log('result.code:', result.code);
+      console.log('result.success:', result.success);
+      console.log('result.data:', result.data);
 
       // 获取响应数据（注意：新的响应格式中code为20，success为true）
       if ((result.code === 20 || result.success === true) && result.data) {
         // 重要：根据后端接口文档，用户信息嵌套在data.user对象中
         const userData = result.data.user || {};
 
-        console.log('用户信息:', userData);
+        console.log('=== 登录成功，用户数据详情 ===');
+        console.log('完整用户数据:', JSON.stringify(userData, null, 2));
+        console.log('用户ID:', userData.id);
+        console.log('用户名:', userData.username);
+        console.log('邮箱:', userData.email);
+        console.log('角色:', userData.role);
+        console.log('简介:', userData.about);
 
         // 登陆时，检查用户是否被冻结
         // 登陆时，检查用户是否被冻结
@@ -126,13 +139,12 @@ const handleLogin = async () => {
         });
 
         // 调试日志
-        console.log('保存的用户信息:', {
-          userId: userData.id,
-          username: userData.username,
-          role: userData.role !== undefined ? userData.role.toString() : '2', // 数字角色编码，默认为普通用户角色
-          email: userData.email || '',
-          phone: userData.phone || ''
-        });
+        console.log('=== 保存的用户信息 ===');
+        console.log('保存的用户ID:', userData.id);
+        console.log('保存的用户名:', userData.username);
+        console.log('保存的角色:', userData.role !== undefined ? userData.role.toString() : '2');
+        console.log('保存的邮箱:', userData.email || '');
+        console.log('保存的电话:', userData.phone || '');
 
         // 检查认证信息是否正确保存
         const authStatus = debugAuthInfo();

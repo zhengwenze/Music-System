@@ -30,7 +30,8 @@
         <el-input v-model="userInfo.createTime" disabled></el-input>
       </el-form-item>
       <el-form-item label="个人简介">
-        <el-input v-model="userInfo.about" type="textarea" :rows="1" maxlength="15" show-word-limit placeholder="请输入个人简介"></el-input>
+        <el-input v-model="userInfo.about" type="textarea" :rows="1" maxlength="15" show-word-limit
+          placeholder="请输入个人简介"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="handleUpdate">保存修改</el-button>
@@ -150,7 +151,13 @@ export default {
       try {
         loading.value = true
         const userId = getUserId()
-        console.log('加载用户资料，userId:', userId)
+        console.log('=== 个人信息页面加载 ===')
+        console.log('从localStorage获取的userId:', userId)
+        console.log('localStorage中的所有用户信息:', {
+          userId: localStorage.getItem('userId'),
+          username: localStorage.getItem('username'),
+          userRole: localStorage.getItem('userRole')
+        })
 
         if (!userId) {
           console.error('用户ID不存在')
@@ -158,7 +165,14 @@ export default {
           return
         }
 
+        console.log('正在请求用户信息，URL参数userId:', userId)
         const response = await getUserInfo(userId)
+        console.log('=== 获取用户信息响应 ===')
+        console.log('完整响应:', response)
+        console.log('response.data:', response.data)
+        console.log('response.data.data:', response.data?.data)
+        console.log('response.data.data.user:', response.data?.data?.user)
+        console.log('用户详细数据:', JSON.stringify(response.data?.data?.user, null, 2))
 
         // 正确的响应数据结构验证
         if (response && response.data && (response.data.success || response.data.code === 20) && response.data.data && response.data.data.user) {

@@ -19,7 +19,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8848
+        enabled: false
 
 # MyBatis Plus配置
 mybatis-plus:

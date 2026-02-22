@@ -169,10 +169,10 @@ export function editMusic(musicData) {
             filteredMusicData[key] = musicData[key];
         }
     }
-    
+
     // 获取用户ID并添加到请求头
     const userId = getUserId();
-    
+
     return Mod_admin_service.post('/editMusic', filteredMusicData, {
         headers: {
             'id': userId // 添加用户ID到请求头
