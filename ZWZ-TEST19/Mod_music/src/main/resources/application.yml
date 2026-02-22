@@ -18,7 +18,10 @@ spring:
   cloud:
     nacos:
       discovery:
+        enabled: false
         server-addr: localhost:8848
+    compatibility-verifier:
+      enabled: false
   #连接redis数据库6379端口不要改！
   data:
     redis:
